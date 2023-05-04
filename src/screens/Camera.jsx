@@ -27,11 +27,15 @@ function CameraScreen () {
     )
   } else {
     return (
-      isFocused && <Camera
-        style={StyleSheet.absoluteFill}
-        device={device}
-        isActive
-                   />
+      isFocused && (
+        <Camera
+          enableZoomGesture
+          enablePortraitEffectsMatteDelivery
+          style={StyleSheet.absoluteFill}
+          device={device}
+          isActive
+        />
+      )
     )
   }
 }
