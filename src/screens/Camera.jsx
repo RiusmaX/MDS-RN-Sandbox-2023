@@ -1,8 +1,14 @@
+import { useIsFocused } from '@react-navigation/native'
 import { useEffect } from 'react'
-import { Text, View } from 'react-native'
-import { Camera } from 'react-native-vision-camera'
+import { StyleSheet, Text, View } from 'react-native'
+import { Camera, useCameraDevices } from 'react-native-vision-camera'
 
 function CameraScreen () {
+  const isFocused = useIsFocused()
+  const devices = useCameraDevices()
+  const device = devices.back
+  console.log(devices)
+
   useEffect(() => {
     const requestPermissions = async () => {
       const newCameraPermission = await Camera.requestCameraPermission()
@@ -12,11 +18,22 @@ function CameraScreen () {
     }
     requestPermissions()
   }, [])
-  return (
-    <View>
-      <Text>Camera</Text>
-    </View>
-  )
+
+  if (device == null) {
+    return (
+      <View>
+        <Text>Camera</Text>
+      </View>
+    )
+  } else {
+    return (
+      isFocused && <Camera
+        style={StyleSheet.absoluteFill}
+        device={device}
+        isActive
+                   />
+    )
+  }
 }
 
 export default CameraScreen
